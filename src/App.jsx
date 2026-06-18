@@ -1,0 +1,68 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import ProtectedRoute from "./pages/ProtectedRoute";
+import MovieDetail from "./pages/MovieDetail";
+import Watchlist from "./pages/Watchlist";
+import Dashboard from "./components/Dashboard";
+
+import { AuthProvider } from "./context/AuthContext";
+import { WatchlistProvider } from "./context/WatchlistContext";
+
+import "./App.css";
+
+function App() {
+  return (
+    <AuthProvider>
+      <WatchlistProvider>
+        <BrowserRouter>
+
+          <Routes>
+
+            <Route
+              path="/"
+              element={<Home />}
+            />
+
+            <Route
+              path="/login"
+              element={<Login />}
+            />
+
+            <Route
+              path="/movie/:id"
+              element={
+                <ProtectedRoute>
+                  <MovieDetail />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/watchlist"
+              element={
+                <ProtectedRoute>
+                  <Watchlist />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+
+          </Routes>
+
+        </BrowserRouter>
+      </WatchlistProvider>
+    </AuthProvider>
+  );
+}
+
+export default App;
