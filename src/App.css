@@ -209,7 +209,7 @@
 }
 
 .movie-card:hover img {
-  brightness: 1.1);
+  filter: brightness(1.1);
 }
 
 .movie-info {
