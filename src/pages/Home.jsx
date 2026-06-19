@@ -1,18 +1,20 @@
 import { useState } from "react";
-
 import Navbar from "../components/Navbar";
 import HeroBanner from "../components/HeroBanner";
-import SearchBar from "../components/SearchBar";
 import MovieCard from "../components/MovieCard";
-
+import SearchBar from "../components/SearchBar";
 import { moviesLineup } from "../data/movies";
 
 function Home() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredMovies, setFilteredMovies] = useState(moviesLineup);
 
-  const filteredMovies = moviesLineup.filter((movie) =>
-    movie.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleSearch = (searchTerm) => {
+    const filtered = moviesLineup.filter((movie) =>
+      movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      movie.genre.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredMovies(filtered);
+  };
 
   return (
     <>
@@ -20,19 +22,22 @@ function Home() {
       <HeroBanner />
 
       <div className="home-container">
-        <SearchBar onSearch={setSearchTerm} />
-
-        <h2 className="section-title">
-          Trending Telugu Movies
-        </h2>
+        <h2 className="section-title">Trending Telugu Movies</h2>
+        <SearchBar onSearch={handleSearch} />
 
         <div className="movie-grid">
-          {filteredMovies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-            />
-          ))}
+          {filteredMovies.length > 0 ? (
+            filteredMovies.map((movie) => (
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+              />
+            ))
+          ) : (
+            <div className="no-results">
+              <p>No movies found. Try a different search!</p>
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -1,27 +1,16 @@
-import React from "react";
-
 function MovieCard({ movie }) {
   return (
     <div className="movie-card">
+      <img
+        src={movie.img}
+        alt={movie.title}
+        className="movie-poster"
+      />
 
-      <div className="poster-wrapper">
-        <img
-          src={movie.img}
-          alt={movie.title}
-          loading="lazy"
-        />
+      <div className="movie-info">
+        <h3 className="movie-title">{movie.title}</h3>
+        <p className="movie-genre">{movie.genre}</p>
       </div>
-
-      <div className="card-details">
-        <h3 className="card-title">
-          {movie.title}
-        </h3>
-
-        <p className="movie-genre">
-          {movie.genre}
-        </p>
-      </div>
-
     </div>
   );
 }
