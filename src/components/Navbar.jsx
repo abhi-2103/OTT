@@ -14,7 +14,6 @@ function Navbar() {
         <Link to="/">Home</Link>
 
         {user && <Link to="/watchlist">📋 Watchlist</Link>}
-        <Link to="/profile">👤 Profile</Link>
 
         {!user ? (
           <Link to="/login">Login</Link>

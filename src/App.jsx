@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Profile from "./pages/Profile";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import MovieDetail from "./pages/MovieDetail";
 import Watchlist from "./pages/Watchlist";
@@ -30,15 +29,6 @@ function App() {
             <Route
               path="/login"
               element={<Login />}
-            />
-
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              }
             />
 
             <Route

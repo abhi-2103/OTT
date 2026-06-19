@@ -3,8 +3,6 @@ import Navbar from "../components/Navbar";
 import HeroBanner from "../components/HeroBanner";
 import MovieCard from "../components/MovieCard";
 import SearchBar from "../components/SearchBar";
-import RecommendedSection from "../components/RecommendedSection";
-import TrendingNow from "../components/TrendingNow";
 import { moviesLineup } from "../data/movies";
 
 function Home() {
@@ -41,16 +39,6 @@ function Home() {
             </div>
           )}
         </div>
-      </div>
-
-      {/* Trending Now Section */}
-      <div className="home-container">
-        <TrendingNow />
-      </div>
-
-      {/* Recommended Section */}
-      <div className="home-container">
-        <RecommendedSection />
       </div>
     </>
   );
