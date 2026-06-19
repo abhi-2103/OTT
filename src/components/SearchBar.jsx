@@ -5,9 +5,7 @@ function SearchBar({ onSearch }) {
 
   const handleChange = (e) => {
     const value = e.target.value;
-
     setSearch(value);
-
     onSearch(value);
   };
 
@@ -15,9 +13,10 @@ function SearchBar({ onSearch }) {
     <div className="search-container">
       <input
         type="text"
-        placeholder="Search Movies..."
+        placeholder="Search Telugu Movies..."
         value={search}
         onChange={handleChange}
+        className="search-input"
       />
     </div>
   );
