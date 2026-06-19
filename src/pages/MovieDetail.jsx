@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import { fetchMovieDetail } from "../services/api";
 import { useWatchlist } from "../context/WatchlistContext";
+import { moviesLineup } from "../data/movies";
 
 function MovieDetail() {
   const { id } = useParams();
@@ -14,38 +14,34 @@ function MovieDetail() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const loadMovie = async () => {
-      const data = await fetchMovieDetail(id);
-      setMovie(data);
-      setIsAdded(isInWatchlist(id));
-      setLoading(false);
-    };
-
-    loadMovie();
+    // Find movie from local data
+    const foundMovie = moviesLineup.find((m) => m.id === parseInt(id));
+    if (foundMovie) {
+      setMovie(foundMovie);
+      setIsAdded(isInWatchlist(foundMovie.id));
+    }
+    setLoading(false);
   }, [id, isInWatchlist]);
 
   const handleAddToWatchlist = () => {
     if (!movie) return;
 
     if (isAdded) {
-      removeFromWatchlist(id);
+      removeFromWatchlist(movie.id);
       setIsAdded(false);
       setMessage("Removed from Watchlist!");
     } else {
-      const movieData = {
-        imdbID: movie.imdbID || id,
-        Title: movie.Title,
-        Year: movie.Year,
-        Type: movie.Type,
-        Poster: movie.Poster,
-      };
-      addToWatchlist(movieData);
+      addToWatchlist(movie);
       setIsAdded(true);
       setMessage("Added to Watchlist!");
     }
 
     // Clear message after 2 seconds
     setTimeout(() => setMessage(""), 2000);
+  };
+
+  const handleWatch = () => {
+    navigate(`/player/${movie.id}`);
   };
 
   if (loading) {
@@ -59,7 +55,7 @@ function MovieDetail() {
     );
   }
 
-  if (!movie || movie.Response === "False") {
+  if (!movie) {
     return (
       <>
         <Navbar />
@@ -84,64 +80,52 @@ function MovieDetail() {
         <div className="movie-detail-container">
           <div className="movie-poster">
             <img
-              src={
-                movie.Poster !== "N/A"
-                  ? movie.Poster
-                  : "https://via.placeholder.com/300x450"
-              }
-              alt={movie.Title}
+              src={movie.img}
+              alt={movie.title}
             />
           </div>
 
           <div className="movie-info-detail">
-            <h1>{movie.Title}</h1>
+            <h1>{movie.title}</h1>
 
             <div className="movie-meta">
-              <span className="year">{movie.Year}</span>
-              <span className="type">{movie.Type}</span>
-              {movie.imdbRating && (
-                <span className="rating">★ {movie.imdbRating}/10</span>
-              )}
+              <span className="genre">{movie.genre}</span>
+              <span className="rating">★ 8.5/10</span>
+              <span className="year">2024</span>
             </div>
 
-            {movie.Plot && movie.Plot !== "N/A" && (
-              <div className="plot">
-                <h3>Plot</h3>
-                <p>{movie.Plot}</p>
-              </div>
-            )}
+            <div className="plot">
+              <h3>Description</h3>
+              <p>
+                Experience an incredible journey with this Telugu blockbuster. Packed with
+                action, drama, and entertainment, this movie offers a complete theatrical
+                experience. Perfect for family viewing and action lovers.
+              </p>
+            </div>
 
-            {movie.Director && movie.Director !== "N/A" && (
-              <div className="detail-item">
-                <strong>Director:</strong> {movie.Director}
-              </div>
-            )}
+            <div className="detail-item">
+              <strong>Genre:</strong> {movie.genre}
+            </div>
 
-            {movie.Actors && movie.Actors !== "N/A" && (
-              <div className="detail-item">
-                <strong>Cast:</strong> {movie.Actors}
-              </div>
-            )}
+            <div className="detail-item">
+              <strong>Language:</strong> Telugu
+            </div>
 
-            {movie.Genre && movie.Genre !== "N/A" && (
-              <div className="detail-item">
-                <strong>Genre:</strong> {movie.Genre}
-              </div>
-            )}
+            <div className="detail-item">
+              <strong>Duration:</strong> 2h 15m
+            </div>
 
-            {movie.Runtime && movie.Runtime !== "N/A" && (
-              <div className="detail-item">
-                <strong>Runtime:</strong> {movie.Runtime}
-              </div>
-            )}
+            <div className="detail-item">
+              <strong>Audio:</strong> Dolby Digital 5.1
+            </div>
 
             <div className="action-buttons">
-              <button className="play-btn">▶ Play Now</button>
+              <button className="play-btn" onClick={handleWatch}>▶ Play Now</button>
               <button 
                 className={`add-btn ${isAdded ? 'added' : ''}`}
                 onClick={handleAddToWatchlist}
               >
-                {isAdded ? '✓ Remove from Watchlist' : '+ Add to Watchlist'}
+                {isAdded ? '✓ In Watchlist' : '+ Add to Watchlist'}
               </button>
             </div>
 

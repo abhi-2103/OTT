@@ -50,7 +50,15 @@ function Login() {
     setTimeout(() => {
       login(formData);
       setLoading(false);
-      navigate("/");
+
+      // Check if there's a saved movie to redirect to
+      const redirectToMovie = sessionStorage.getItem("redirectToMovie");
+      if (redirectToMovie) {
+        sessionStorage.removeItem("redirectToMovie");
+        navigate(`/movie/${redirectToMovie}`);
+      } else {
+        navigate("/");
+      }
     }, 500);
   };
 

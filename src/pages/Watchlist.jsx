@@ -8,8 +8,8 @@ function Watchlist() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const handleRemove = (imdbID) => {
-    removeFromWatchlist(imdbID);
+  const handleRemove = (movieId) => {
+    removeFromWatchlist(movieId);
   };
 
   return (
@@ -36,35 +36,33 @@ function Watchlist() {
           <div className="watchlist-container">
             <div className="watchlist-grid">
               {watchlist.map((movie) => (
-                <div key={movie.imdbID} className="watchlist-card">
+                <div key={movie.id} className="watchlist-card">
                   <div className="watchlist-poster">
                     <img
-                      src={
-                        movie.Poster !== "N/A"
-                          ? movie.Poster
-                          : "https://via.placeholder.com/200x300"
-                      }
-                      alt={movie.Title}
+                      src={movie.img}
+                      alt={movie.title}
                     />
                     <div className="watchlist-overlay">
                       <button
                         className="play-watchlist-btn"
-                        onClick={() => navigate(`/movie/${movie.imdbID}`)}
+                        onClick={() => navigate(`/movie/${movie.id}`)}
                       >
-                        ▶ View Details
+                        ▶ Watch Now
                       </button>
                       <button
                         className="remove-watchlist-btn"
-                        onClick={() => handleRemove(movie.imdbID)}
+                        onClick={() => handleRemove(movie.id)}
                       >
                         ✕ Remove
                       </button>
                     </div>
                   </div>
                   <div className="watchlist-info">
-                    <h3>{movie.Title}</h3>
-                    <p className="watchlist-year">{movie.Year}</p>
-                    <p className="watchlist-type">{movie.Type}</p>
+                    <h3>{movie.title}</h3>
+                    <p className="watchlist-genre">{movie.genre}</p>
+                    <p className="watchlist-date">
+                      Added: {new Date(movie.addedAt).toLocaleDateString()}
+                    </p>
                   </div>
                 </div>
               ))}

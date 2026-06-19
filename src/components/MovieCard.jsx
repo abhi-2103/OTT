@@ -1,12 +1,20 @@
 
 
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function MovieCard({ movie }) {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const handleClick = () => {
-    navigate(`/movie/${movie.id}`);
+    if (!user) {
+      // Save the movie ID for after login
+      sessionStorage.setItem("redirectToMovie", movie.id);
+      navigate("/login");
+    } else {
+      navigate(`/movie/${movie.id}`);
+    }
   };
 
   return (

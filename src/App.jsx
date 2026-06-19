@@ -6,6 +6,7 @@ import Profile from "./pages/Profile";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import MovieDetail from "./pages/MovieDetail";
 import Watchlist from "./pages/Watchlist";
+import Player from "./pages/Player";
 import Dashboard from "./components/Dashboard";
 
 import { AuthProvider } from "./context/AuthContext";
@@ -45,6 +46,20 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Watchlist />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/movie/:id"
+              element={<MovieDetail />}
+            />
+
+            <Route
+              path="/player/:id"
+              element={
+                <ProtectedRoute>
+                  <Player />
                 </ProtectedRoute>
               }
             />

@@ -19,20 +19,20 @@ export const WatchlistProvider = ({ children }) => {
   }, [watchlist]);
 
   const addToWatchlist = (movie) => {
-    const exists = watchlist.some(m => m.imdbID === movie.imdbID);
+    const exists = watchlist.some(m => m.id === movie.id);
     if (!exists) {
-      setWatchlist([...watchlist, movie]);
+      setWatchlist([...watchlist, { ...movie, addedAt: new Date().toISOString() }]);
       return true;
     }
     return false;
   };
 
-  const removeFromWatchlist = (imdbID) => {
-    setWatchlist(watchlist.filter(m => m.imdbID !== imdbID));
+  const removeFromWatchlist = (movieId) => {
+    setWatchlist(watchlist.filter(m => m.id !== movieId));
   };
 
-  const isInWatchlist = (imdbID) => {
-    return watchlist.some(m => m.imdbID === imdbID);
+  const isInWatchlist = (movieId) => {
+    return watchlist.some(m => m.id === movieId);
   };
 
   return (
