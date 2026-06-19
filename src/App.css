@@ -272,6 +272,7 @@
   padding: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -285,6 +286,7 @@
   padding: 0;
   display: -webkit-box;
   -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -609,7 +611,7 @@
 }
 
 .watchlist-poster:hover img {
-  brightness: 0.8;
+  filter: brightness(0.8);
 }
 
 .watchlist-overlay {
